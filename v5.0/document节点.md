@@ -288,3 +288,333 @@ document.cookie属性用来操作浏览器Cookie，详见《浏览器环境》�
 
 **读写相关的方法**
 
+`document.open()，document.close()`
+
+_document.open方法用于新建一个文档，供write方法写入内容。它实际上等于清除当前文档，重新写入内容。不要将此方法与window.open()混淆，后者用来打开一个新窗口，与当前文档无关。_
+
+_document.close方法用于关闭open方法所新建的文档。一旦关闭，write方法就无法写入内容了。如果再调用write方法，就等同于又调用open方法，新建一个文档，再写入内容。_
+
+`document.write()，document.writeln()`
+
+document.write方法用于向当前文档写入内容。只要当前文档还没有用close方法关闭，它所写入的内容就会追加在已有内容的后面。
+
+```
+// 页面显示“helloworld”
+document.open();
+document.write('hello');
+document.write('world');
+document.close();
+```
+
+注意，document.write会当作HTML代码解析，不会转义。
+
+```
+document.write('<p>hello world</p>');
+```
+
+如果页面已经解析完成（DOMContentLoaded事件发生之后），再调用write方法，它会先调用open方法，擦除当前文档所有内容，然后再写入。
+
+```
+document.addEventListener('DOMContentLoaded', function (event) {
+  document.write('<p>Hello World!</p>');
+});
+
+// 等同于
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  document.open();
+  document.write('<p>Hello World!</p>');
+  document.close();
+});
+```
+
+如果在页面渲染过程中调用write方法，并不会调用open方法。（可以理解成，open方法已调用，但close方法还未调用。）
+
+```
+<html>
+<body>
+hello
+<script type="text/javascript">
+  document.write("world")
+</script>
+</body>
+</html>
+``
+
+在浏览器打开上面网页，将会显示hello world。
+
+document.write是JavaScript语言标准化之前就存在的方法，现在完全有更符合标准的方法向文档写入内容（比如对innerHTML属性赋值）。所以，除了某些特殊情况，应该尽量避免使用document.write这个方法。
+
+document.writeln方法与write方法完全一致，除了会在输出内容的尾部添加换行符。
+
+```
+document.write(1);
+document.write(2);
+// 12
+
+document.writeln(1);
+document.writeln(2);
+// 1
+// 2
+//
+```
+注意，writeln方法添加的是ASCII码的换行符，渲染成HTML网页时不起作用，即在网页上显示不出换行。
+
+**查找节点的方法**
+
+以下方法用来查找某个节点。
+
+`document.querySelector()，document.querySelectorAll()`
+
+document.querySelector方法接受一个CSS选择器作为参数，返回匹配该选择器的元素节点。如果有多个节点满足匹配条件，则返回第一个匹配的节点。如果没有发现匹配的节点，则返回null。
+
+document.querySelectorAll方法与querySelector用法类似，区别是返回一个NodeList对象，包含所有匹配给定选择器的节点。
+
+这两个方法的参数，可以是逗号分隔的多个CSS选择器，返回匹配其中一个选择器的元素节点。
+
+```
+var matches = document.querySelectorAll('div.note, div.alert');
+```
+
+上面代码返回class属性是note或alert的div元素。
+
+但是，它们不支持CSS伪元素的选择器（比如:first-line和:first-letter）和伪类的选择器（比如:link和:visited），即无法选中伪元素和伪类。
+
+如果querySelectorAll方法的参数是字符串*，则会返回文档中的所有HTML元素节点。另外，querySelectorAll的返回结果不是动态集合，不会实时反映元素节点的变化。
+
+最后，这两个方法除了定义在document对象上，还定义在元素节点上，即在元素节点上也可以调用。
+
+`document.getElementsByTagName()`
+
+document.getElementsByTagName方法返回所有指定HTML标签的元素，返回值是一个类似数组的HTMLCollection对象，可以实时反映HTML文档的变化。如果没有任何匹配的元素，就返回一个空集。
+
+HTML标签名是大小写不敏感的，因此getElementsByTagName方法也是大小写不敏感的。另外，返回结果中，各个成员的顺序就是它们在文档中出现的顺序。
+
+如果传入*，就可以返回文档中所有HTML元素。
+
+注意，HTML元素本身也定义了getElementsByTagName方法，返回该元素的后代元素中符合指定标签的元素。也就是说，这个方法不仅可以在document对象上调用，也可以在任何元素节点上调用。
+
+`document.getElementsByClassName()`
+
+document.getElementsByClassName方法返回一个类似数组的对象（HTMLCollection实例对象），包括了所有class名字符合指定条件的元素，元素的变化实时反映在返回结果中。
+
+如果参数是一个空格分隔的字符串，元素的class必须符合所有字符串之中所有的class才会返回。
+
+```
+var elements = document.getElementsByClassName('foo bar');
+```
+
+上面代码返回同时具有foo和bar两个class的元素，foo和bar的顺序不重要。
+
+与getElementsByTagName方法一样，getElementsByClassName方法不仅可以在document对象上调用，也可以在任何元素节点上调用。
+
+`document.getElementsByName()`
+
+document.getElementsByName方法用于选择拥有name属性的HTML元素（比如<form>、<radio>、<img>、<frame>、<embed>和<object>等），返回一个类似数组的的对象（NodeList对象的实例），因为name属性相同的元素可能不止一个。
+
+`getElementById()`
+
+getElementById方法返回匹配指定id属性的元素节点。如果没有发现匹配的节点，则返回null。
+
+document.getElementById方法与document.querySelector方法都能获取元素节点，不同之处是document.querySelector方法的参数使用CSS选择器语法，document.getElementById方法的参数是HTML标签元素的id属性。
+
+另外，这个方法只能在document对象上使用，不能在其他元素节点上使用。
+
+`document.elementFromPoint()`
+
+document.elementFromPoint方法返回位于页面指定位置最上层的Element子节点。
+
+```
+var element = document.elementFromPoint(50, 50);
+```
+
+上面代码选中在(50, 50)这个坐标位置的最上层的那个HTML元素。
+
+elementFromPoint方法的两个参数，依次是相对于当前视口左上角的横坐标和纵坐标，单位是像素。如果位于该位置的HTML元素不可返回（比如文本框的滚动条），则返回它的父元素（比如文本框）。如果坐标值无意义（比如负值或超过视口大小），则返回null。
+
+**生成节点的方法**
+
+以下方法用于生成元素节点。
+
+`document.createElement()`
+
+document.createElement方法用来生成网页元素节点。
+
+```
+var newDiv = document.createElement('div');
+
+
+document.createElement('<div>')
+// DOMException: The tag name provided ('<div>') is not a valid name
+```
+
+`document.createTextNode()`
+
+document.createTextNode方法用来生成文本节点，参数为所要生成的文本节点的内容。
+
+```
+var newDiv = document.createElement('div');
+var newContent = document.createTextNode('Hello');
+newDiv.appendChild(newContent);
+```
+
+这个方法可以确保返回的节点，被浏览器当作文本渲染，而不是当作HTML代码渲染。因此，可以用来展示用户的输入，避免XSS攻击。
+
+```
+var div = document.createElement('div');
+div.appendChild(document.createTextNode('<span>Foo & bar</span>'));
+console.log(div.innerHTML)
+// &lt;span&gt;Foo &amp; bar&lt;/span&gt;
+```
+
+上面代码中，createTextNode方法对大于号和小于号进行转义，从而保证即使用户输入的内容包含恶意代码，也能正确显示。
+
+需要注意的是，该方法不对单引号和双引号转义，所以不能用来对HTML属性赋值。
+
+`document.createAttribute()`
+
+document.createAttribute方法生成一个新的属性对象节点，并返回它。
+
+```
+attribute = document.createAttribute(name);
+```
+
+createAttribute方法的参数name，是属性的名称。
+
+```
+var node = document.getElementById("div1");
+var a = document.createAttribute("my_attrib");
+a.value = "newVal";
+node.setAttributeNode(a);
+
+// 等同于
+
+var node = document.getElementById("div1");
+node.setAttribute("my_attrib", "newVal");
+```
+
+`document.createDocumentFragment()`
+
+createDocumentFragment方法生成一个DocumentFragment对象。
+
+_DocumentFragment对象是一个存在于内存的DOM片段，但是不属于当前文档，常常用来生成较复杂的DOM结构，然后插入当前文档。这样做的好处在于，因为DocumentFragment不属于当前文档，对它的任何改动，都不会引发网页的重新渲染，比直接修改当前文档的DOM有更好的性能表现。_
+
+```
+var docfrag = document.createDocumentFragment();
+
+[1, 2, 3, 4].forEach(function(e) {
+  var li = document.createElement("li");
+  li.textContent = e;
+  docfrag.appendChild(li);
+});
+
+document.body.appendChild(docfrag);
+```
+
+**事件相关的方法**
+
+`document.createEvent()`
+
+document.createEvent方法生成一个事件对象，该对象可以被element.dispatchEvent方法使用，触发指定事件。
+
+```
+var event = document.createEvent(type);
+```
+
+createEvent方法的参数是事件类型，比如UIEvents、MouseEvents、MutationEvents、HTMLEvents。
+
+```
+var event = document.createEvent('Event');
+event.initEvent('build', true, true);
+document.addEventListener('build', function (e) {
+  // ...
+}, false);
+document.dispatchEvent(event);
+```
+
+`document.addEventListener()，document.removeEventListener()，document.dispatchEvent()`
+
+以下三个方法与document节点的事件相关。这些方法都继承自EventTarget接口，详细介绍参见《Event对象》章节的《EventTarget》部分。
+
+```
+// 添加事件监听函数
+document.addEventListener('click', listener, false);
+
+// 移除事件监听函数
+document.removeEventListener('click', listener, false);
+
+// 触发事件
+var event = new Event('click');
+document.dispatchEvent(event);
+```
+
+**其他方法**
+
+`document.hasFocus()`
+
+document.hasFocus方法返回一个布尔值，表示当前文档之中是否有元素被激活或获得焦点。
+
+```
+var focused = document.hasFocus();
+```
+
+注意，有焦点的文档必定被激活（active），反之不成立，激活的文档未必有焦点。比如如果用户点击按钮，从当前窗口跳出一个新窗口，该新窗口就是激活的，但是不拥有焦点。
+
+`document.createNodeIterator()，document.createTreeWalker()`
+
+以下方法用于遍历元素节点。
+
+（1）document.createNodeIterator()
+
+document.createNodeIterator方法返回一个DOM的子节点遍历器。
+
+```
+var nodeIterator = document.createNodeIterator(
+  document.body,
+  NodeFilter.SHOW_ELEMENT
+);
+```
+
+上面代码返回body元素的遍历器。createNodeIterator方法的第一个参数为遍历器的根节点，第二个参数为所要遍历的节点类型，这里指定为元素节点。其他类型还有所有节点（NodeFilter.SHOW_ALL）、文本节点（NodeFilter.SHOW_TEXT）、评论节点（NodeFilter.SHOW_COMMENT）等。
+
+有一个需要注意的地方，遍历器返回的第一个节点，总是根节点。
+
+（2）document.createTreeWalker()
+
+document.createTreeWalker方法返回一个DOM的子树遍历器。它与createNodeIterator方法的区别在于，后者只遍历子节点，而它遍历整个子树。
+
+document.createTreeWalker方法的第一个参数，是所要遍历的根节点，第二个参数指定所要遍历的节点类型。
+
+`document.adoptNode()`
+
+document.adoptNode方法将某个节点，从其原来所在的文档移除，插入当前文档，并返回插入后的新节点。
+
+```
+node = document.adoptNode(externalNode);
+```
+
+document.importNode()
+
+document.importNode方法从外部文档拷贝指定节点，插入当前文档。
+
+```
+var node = document.importNode(externalNode, deep);
+```
+
+document.importNode方法用于创造一个外部节点的拷贝，然后插入当前文档。它的第一个参数是外部节点，第二个参数是一个布尔值，表示对外部节点是深拷贝还是浅拷贝，默认是浅拷贝（false）。虽然第二个参数是可选的，但是建议总是保留这个参数，并设为true。
+
+注意，importNode方法只是拷贝外部节点，这时该节点的父节点是null。下一步还必须将这个节点插入当前文档的DOM树。
+
+```
+var iframe = document.getElementsByTagName('iframe')[0];
+var oldNode = iframe.contentWindow.document.getElementById('myNode');
+var newNode = document.importNode(oldNode, true);
+document.getElementById("container").appendChild(newNode);
+```
+
+上面代码从iframe窗口，拷贝一个指定节点myNode，插入当前文档。
+
+
+`document.getSelection()`
+
+这个方法指向window.getSelection()，参见window对象一节的介绍。
