@@ -48,7 +48,7 @@ Element.focus()
 
 Element对象对应网页的HTML标签元素。每一个HTML标签元素，在DOM树上都会转化成一个Element节点对象（以下简称元素节点）。
 
-元素节点的nodeType属性都是1，但是不同HTML标签生成的元素节点是不一样的。JavaScript内部使用不同的构造函数，生成不同的Element节点，比如<a>标签的节点对象由HTMLAnchorElement()构造函数生成，<button>标签的节点对象由HTMLButtonElement()构造函数生成。因此，元素节点不是一种对象，而是一组对象。
+元素节点的nodeType属性都是1，但是不同HTML标签生成的元素节点是不一样的。JavaScript内部使用不同的构造函数，生成不同的Element节点，比如<`a`>标签的节点对象由HTMLAnchorElement()构造函数生成，<`button`>标签的节点对象由HTMLButtonElement()构造函数生成。因此，元素节点不是一种对象，而是一组对象。
 
 **特征相关的属性**
 
@@ -70,9 +70,9 @@ Element.innerHTML属性返回该元素包含的 HTML 代码。该属性可读写
 
 如果将innerHTML属性设为空，等于删除所有它包含的所有节点。
 
-注意，如果文本节点中包含&、小于号（<）和大于号（>），innerHTML属性会将它们转为实体形式&amp;、&lt;、&gt;。
+注意，如果文本节点中包含&、小于号（<）和大于号（>），innerHTML属性会将它们转为实体形式`&amp;、&lt;、&gt;。`
 
-如果插入的文本包含 HTML 标签，会被解析成为节点对象插入 DOM。注意，如果文本之中含有<script>标签，虽然可以生成script节点，但是插入的代码不会执行。
+如果插入的文本包含 HTML 标签，会被解析成为节点对象插入 DOM。注意，如果文本之中含有<`script`>标签，虽然可以生成script节点，但是插入的代码不会执行。
 
 ```
 var name = "<script>alert('haha')</script>";
@@ -147,7 +147,7 @@ Element.clientWidth属性返回元素节点可见部分的宽度。
 
 这两个属性可以计算得到，等于元素的CSS高度（或宽度）加上CSS的Padding，减去滚动条（如果存在）。
 
-对于整张网页来说，当前可见高度（即视口高度）要从document.documentElement对象（即<html>节点）上获取，等同于window.innerHeight属性减去水平滚动条的高度。没有滚动条时，这两个值是相等的；有滚动条时，前者小于后者。
+对于整张网页来说，当前可见高度（即视口高度）要从document.documentElement对象（即<`html`>节点）上获取，等同于window.innerHeight属性减去水平滚动条的高度。没有滚动条时，这两个值是相等的；有滚动条时，前者小于后者。
 
 ```
 var rootElement = document.documentElement;
@@ -159,7 +159,7 @@ rootElement.clientHeight === window.innerHeight // true
 rootElement.clientWidth === window.innerWidth // true
 ```
 
-注意，这里不能用document.body.clientHeight或document.body.clientWidth，因为document.body返回<body>节点，与视口大小是无关的。
+注意，这里不能用document.body.clientHeight或document.body.clientWidth，因为document.body返回<`body`>节点，与视口大小是无关的。
 
 `Element.clientLeft，Element.clientTop`
 
@@ -245,7 +245,7 @@ Element.offsetLeft返回当前元素左上角相对于Element.offsetParent节点
 
 总结
 
-整张网页的高度和宽度，可以从document.documentElement（即<html>元素）或<body>元素上读取。
+整张网页的高度和宽度，可以从document.documentElement（即<`html`>元素）或<`body`>元素上读取。
 
 ```
 // 网页总高度
@@ -260,7 +260,7 @@ document.documentElement.scrollWidth
 document.body.offsetWidth
 document.body.scrollWidth
 ```
-由于<html>和<body>的宽度可能设得不一样，因此从<body>上取值会更保险一点。
+由于<`html`>和<`body`>的宽度可能设得不一样，因此从<`body`>上取值会更保险一点。
 
 视口的高度和宽度（包括滚动条），有两种方法可以获得。
 
@@ -356,7 +356,7 @@ Element.offsetParent属性返回当前 HTML 元素的最靠近的、并且 CSS �
 
 如果该元素是不可见的（display属性为none），或者位置是固定的（position属性为fixed），则offsetParent属性返回null。
 
-如果某个元素的所有上层节点的position属性都是static，则Element.offsetParent属性指向<body>元素。
+如果某个元素的所有上层节点的position属性都是static，则Element.offsetParent属性指向<`body`>元素。
 
 **属性相关的方法**
 
@@ -460,7 +460,7 @@ height：元素高度（等于y加上height）
 
 Element.getClientRects方法返回一个类似数组的对象，里面是当前元素在页面上形成的所有矩形。每个矩形都有bottom、height、left、right、top和width六个属性，表示它们相对于视口的四个坐标，以及本身的高度和宽度。
 
-对于盒状元素（比如<div>和<p>），该方法返回的对象中只有该元素一个成员。对于行内元素（比如span、a、em），该方法返回的对象有多少个成员，取决于该元素在页面上占据多少行。这是它和Element.getBoundingClientRect()方法的主要区别，对于行内元素，后者总是返回一个矩形区域，前者可能返回多个矩形区域，所以方法名中的Rect用的是复数。
+对于盒状元素（比如<`div`>和<`p`>），该方法返回的对象中只有该元素一个成员。对于行内元素（比如span、a、em），该方法返回的对象有多少个成员，取决于该元素在页面上占据多少行。这是它和Element.getBoundingClientRect()方法的主要区别，对于行内元素，后者总是返回一个矩形区域，前者可能返回多个矩形区域，所以方法名中的Rect用的是复数。
 
 `Element.insertAdjacentHTML()`
 

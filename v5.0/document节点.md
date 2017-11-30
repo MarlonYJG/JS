@@ -78,7 +78,7 @@ document节点有很多属性，其中相当一部分属于快捷方式，指向
 
 document.firstChild通常就返回这个节点。
 
-document.documentElement属性返回当前文档的根节点（root）。它通常是document节点的第二个子节点，紧跟在document.doctype节点后面。对于HTML网页，该属性返回<html>节点。
+document.documentElement属性返回当前文档的根节点（root）。它通常是document节点的第二个子节点，紧跟在document.doctype节点后面。对于HTML网页，该属性返回<`html`>节点。
 
 document.defaultView属性，在浏览器中返回document对象所在的window对象，否则返回null。
 
@@ -88,9 +88,9 @@ document.defaultView === window // true
 
 `document.body，document.head`
 
-document.head属性返回当前文档的<head>节点，document.body属性返回当前文档的<body>。
+document.head属性返回当前文档的<`head`>节点，document.body属性返回当前文档的<`body`>。
 
-这两个属性总是存在的，如果网页源码里面省略了<head>或<body>，浏览器会自动创造。另外，这两个属性是可写的，如果对其写入一个新的节点，会导致原有的所有子节点被移除。
+这两个属性总是存在的，如果网页源码里面省略了<`head`>或<`body`>，浏览器会自动创造。另外，这两个属性是可写的，如果对其写入一个新的节点，会导致原有的所有子节点被移除。
 
 `document.activeElement`
 
@@ -247,7 +247,7 @@ complete：加载完成时
 这个属性变化的过程如下。
 
 > 1. 浏览器开始解析HTML文档，document.readyState属性等于loading。
-> 2. 浏览器遇到HTML文档中的<script>元素，并且没有async或defer属性，就暂停解析，开始执行脚本，这时document.readyState属性还是等于loading。
+> 2. 浏览器遇到HTML文档中的<`script`>元素，并且没有async或defer属性，就暂停解析，开始执行脚本，这时document.readyState属性还是等于loading。
 > 3. HTML文档解析完成，document.readyState属性变成interactive。
 > 4. 浏览器等待图片、样式表、字体文件等外部资源加载完成，一旦全部加载完成，document. readyState属性变成complete。
 
@@ -444,8 +444,8 @@ document.createElement方法用来生成网页元素节点。
 var newDiv = document.createElement('div');
 
 
-document.createElement('<div>')
-// DOMException: The tag name provided ('<div>') is not a valid name
+document.createElement('<`div`>')
+// DOMException: The tag name provided ('<`div`>') is not a valid name
 ```
 
 `document.createTextNode()`
@@ -462,9 +462,9 @@ newDiv.appendChild(newContent);
 
 ```
 var div = document.createElement('div');
-div.appendChild(document.createTextNode('<span>Foo & bar</span>'));
+div.appendChild(document.createTextNode('<`span`>Foo & bar</`span`>'));
 console.log(div.innerHTML)
-// &lt;span&gt;Foo &amp; bar&lt;/span&gt;
+`// &lt;span&gt;Foo &amp; bar&lt;/span&gt;`
 ```
 
 上面代码中，createTextNode方法对大于号和小于号进行转义，从而保证即使用户输入的内容包含恶意代码，也能正确显示。

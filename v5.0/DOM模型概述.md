@@ -50,7 +50,7 @@
 
 Document：整个文档树的顶层节点
 DocumentType：doctype标签（比如<!DOCTYPE html>）
-Element：网页的各种HTML标签（比如<body>、<a>等）
+Element：网页的各种HTML标签（比如<`body`>、<`a`>等）
 Attribute：网页元素的属性（比如class="right"）
 Text：标签之间或标签包含的文本
 Comment：注释
@@ -62,7 +62,7 @@ DocumentFragment：文档的片段
 
 一个文档的所有节点，按照所在的层级，可以抽象成一种树状结构。这种树状结构就是DOM。
 
-最顶层的节点就是document节点，它代表了整个文档。文档里面最高一层的HTML标签，一般是<html>，它构成树结构的根节点（root node），其他HTML标签节点都是它的下级。
+最顶层的节点就是document节点，它代表了整个文档。文档里面最高一层的HTML标签，一般是<`html`>，它构成树结构的根节点（root node），其他HTML标签节点都是它的下级。
 
 除了根节点以外，其他节点对于周围的节点都存在三种关系。
 
@@ -121,14 +121,14 @@ document.baseURI
 // "http://www.example.com/index.html"
 ```
 
-该属性的值一般由当前网址的URL（即window.location属性）决定，但是可以使用HTML的<base>标签，改变该属性的值。
+该属性的值一般由当前网址的URL（即window.location属性）决定，但是可以使用HTML的<`base`>标签，改变该属性的值。
 
 ```
 <base href="http://www.example.com/page.html">
 <base target="_blank" href="http://www.example.com/page.html">
 ```
 
-设置了以后，baseURI属性就返回<base>标签设置的值。
+设置了以后，baseURI属性就返回<`base`>标签设置的值。
 
 **相关节点的属性**
 
