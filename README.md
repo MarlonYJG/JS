@@ -1,1 +1,1 @@
-# js学习笔记
+http://javascript.ruanyifeng.com/ 
