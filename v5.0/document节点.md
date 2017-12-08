@@ -241,7 +241,7 @@ document.characterSet属性返回渲染当前文档的字符集，比如UTF-8、
 document.readyState属性返回当前文档的状态，共有三种可能的值。
 
 loading：加载HTML代码阶段（尚未完成解析）
-interactive：加载外部资源阶段时
+interactive：加载外部资源阶段时（此时HTML文档解析已经完成）
 complete：加载完成时
 
 这个属性变化的过程如下。

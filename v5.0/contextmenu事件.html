@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    p{
+        /* font-size: 10em; */
+    }
+    </style>
+</head>
+<body>
+  <p id="1">contextmenu</p>
+
+
+  <script>
+      var events=['contextmenu','click','wheel','touchstart','resize']
+
+    document.getElementById('1').addEventListener(events[3],callback)
+    
+    function callback(e) {
+        e.preventDefault();
+        console.log(e);
+
+        // if (e.wheelDeltaY < 0) {//方法
+        //     document.getElementById('1').style.fontSize='500px'
+        //     console.log(document.getElementById('1').style.fontSize='500px')
+        // }else{//缩小
+        //     document.getElementById('1').style.fontSize='5px';
+        // }
+    
+       
+    }
+
+
+window.addEventListener(events[4],cal)
+function cal(params) {
+    console.log(document.body.clientWidth )
+    if (document.body.clientWidth ) {
+        
+    }
+}
+  </script>
+    
+</body>
+</html>

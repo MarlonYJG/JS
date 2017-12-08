@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  
+        <script id="worker" type="app/worker">
+            addEventListener('message', function() {
+                var xhr = new XMLHttpRequest();
+                xhr.open( "post", 'http://192.168.188.177:8080/dyh/ceshi.do' );
+                xhr.onreadystatechange = function(){
+                    if( xhr.readyState !== 4 ) return;
+                    if( xhr.status === 200 ){
+                        postMessage(xhr.responseText);
+                    }
+                }
+                xhr.send( 'user=zhx' );
+
+            }, false);
+           </script>
+        
+          <script>
+            (function() {
+              var blob = new Blob([document.querySelector('#worker').textContent]);
+              var url = window.URL.createObjectURL(blob);
+              var worker = new Worker(url);//创建一个子线程
+        
+              worker.addEventListener('message', function(e) {
+                console.log(e.data);
+              }, false);
+        
+              worker.postMessage('');//启动子线程
+            })();
+          </script>
+    
+</body>
+</html>

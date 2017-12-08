@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <h1 id="1">event</h1>  
+
+  <script>
+    //   document.getElementById('1').addEventListener('click',function(e){
+    //       console.log(e,e.detail)
+
+    //   });
+
+
+
+      var e=new Event('click');
+      document.getElementById('1').addEventListener('click',function(e){
+          console.log(e,e.detail)
+
+      });
+      document.getElementById('1').dispatchEvent(e);
+  </script>
+</body>
+</html>

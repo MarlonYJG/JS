@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <h1>页面的展示</h1>
+  <script>
+    
+    /*用途一：在页面继续追加*/
+    //   document.write("<p>hello world</p>")
+
+    /*用途二：覆盖刷新页面，即页面还未进行渲染时触发*/
+        //如果页面已经解析完成（DOMContentLoaded事件发生之后），再调用write方法，它会先调用open方法，擦除当前文档所有内容，然后再写入。
+      document.addEventListener('DOMContentLoaded',function(){
+          document.write('<p>DOM树解析完成时触发，即页面还未进行渲染</p>')
+      })
+  </script>  
+</body>
+</html>

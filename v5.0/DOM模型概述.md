@@ -46,7 +46,7 @@
 
 **节点**
 
-*DOM的最小组成单位叫做节点（node）。文档的树形结构（DOM树），就是由各种不同类型的节点组成。每个节点可以看作是文档树的一片叶子。*
+`*DOM的最小组成单位叫做节点（node）。文档的树形结构（DOM树），就是由各种不同类型的节点组成。每个节点可以看作是文档树的一片叶子。*`
 
 Document：整个文档树的顶层节点
 DocumentType：doctype标签（比如<!DOCTYPE html>）
@@ -62,7 +62,7 @@ DocumentFragment：文档的片段
 
 一个文档的所有节点，按照所在的层级，可以抽象成一种树状结构。这种树状结构就是DOM。
 
-最顶层的节点就是document节点，它代表了整个文档。文档里面最高一层的HTML标签，一般是<`html`>，它构成树结构的根节点（root node），其他HTML标签节点都是它的下级。
+`最顶层的节点就是document节点，它代表了整个文档。文档里面最高一层的HTML标签，一般是<`html`>，它构成树结构的根节点（root node），其他HTML标签节点都是它的下级。`
 
 除了根节点以外，其他节点对于周围的节点都存在三种关系。
 
@@ -90,6 +90,7 @@ DOCUMENT_NODE | #document | 9
 DOCUMENT_FRAGMENT_NODE | #document-fragment | 11
 DOCUMENT_TYPE_NODE | 等同于DocumentType.name | 10
 
+例如：
 `document.nodeName // "#document"`
 `document.nodeType // 9`
 
@@ -154,7 +155,7 @@ previousSibling属性返回当前节点前面的、距离最近的一个同级�
 
 parentNode属性返回当前节点的父节点。对于一个节点来说，它的父节点只可能是三种类型：element节点、document节点和documentfragment节点。
 
-对于document节点和documentfragment节点，它们的父节点都是null。另外，对于那些生成后还没插入DOM树的节点，父节点也是null。
+`对于document节点和documentfragment节点，它们的父节点都是null。另外，对于那些生成后还没插入DOM树的节点，父节点也是null。`
 
 `Node.parentElement`
 
@@ -164,7 +165,7 @@ parentElement属性返回当前节点的父Element节点。如果当前节点没
 
 `Node.childNodes`
 
-childNodes属性返回一个NodeList集合，成员包括当前节点的所有子节点。注意，除了HTML元素节点，该属性返回的还包括Text节点和Comment节点。如果当前节点不包括任何子节点，则返回一个空的NodeList集合。由于NodeList对象是一个动态集合，一旦子节点发生变化，立刻会反映在返回结果之中。
+childNodes属性返回一个NodeList集合，成员包括当前节点的所有子节点。注意，除了HTML元素节点，该属性返回的还包括Text节点和Comment节点。如果当前节点不包括任何子节点，则返回一个空的NodeList集合。`由于NodeList对象是一个动态集合，一旦子节点发生变化，立刻会反映在返回结果之中。`
 
 `Node.firstChild，Node.lastChild`
 
@@ -281,7 +282,7 @@ typeof HTMLCollection // "function"
 
 NodeList实例对象是一个类似数组的对象，它的成员是节点对象。Node.childNodes、document.querySelectorAll()返回的都是NodeList实例对象。
 
-NodeList实例对象可能是动态集合，也可能是静态集合。所谓动态集合就是一个活的集合，DOM树删除或新增一个相关节点，都会立刻反映在NodeList接口之中。Node.childNodes返回的，就是一个动态集合。
+`NodeList实例对象可能是动态集合，也可能是静态集合。所谓动态集合就是一个活的集合，DOM树删除或新增一个相关节点，都会立刻反映在NodeList接口之中。Node.childNodes返回的，就是一个动态集合。`
 
 document.querySelectorAll方法返回的是一个静态集合。DOM内部的变化，并不会实时反映在该方法的返回结果之中。
 
@@ -313,7 +314,7 @@ nodeItem = nodeList[index]
 
 HTMLCollection实例对象与NodeList实例对象类似，也是节点的集合，返回一个类似数组的对象。document.links、docuement.forms、document.images等属性，返回的都是HTMLCollection实例对象。
 
-HTMLCollection与NodeList的区别有以下几点。
+`HTMLCollection与NodeList的区别有以下几点。`
 
 （1）HTMLCollection实例对象的成员只能是Element节点，NodeList实例对象的成员可以包含其他节点。
 
