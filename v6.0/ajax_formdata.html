@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FormData类型可以用于构造表单数据。</title>
+</head>
+<body>
+  
+    
+    <script>
+    
+        var formData = new FormData();
+        formData.append('username','zhs');
+        formData.append('email', 'zhangsan@example.com');
+        formData.append('birthDate', 1940);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open( "post", 'http://192.168.188.177:8080/dyh/ceshi.do' );
+        xhr.onreadystatechange=function(){
+            if (xhr.readyState==4) {
+                if (xhr.status==200) {
+                    console.log(xhr.responseText);
+                }
+            }
+        }
+
+        xhr.send(formData);
+
+        // 上面的代码构造了一个formData对象，然后使用send方法发送。它的效果与点击下面表单的submit按钮是一样的。
+
+//         <form id='registration' name='registration' action='/register'>
+//              <input type='text' name='username' value='张三'>
+//              <input type='email' name='email' value='zhangsan@example.com'>
+//              <input type='number' name='birthDate' value='1940'>
+
+//              <input type='submit' onclick='return sendForm(this.form);'>
+//         </form>
+    
+    
+    </script>
+</body>
+</html>

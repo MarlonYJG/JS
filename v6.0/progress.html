@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  
+    <input type="file">
+    
+    <script>
+    
+    document.querySelector('input[type="file"]').addEventListener('change',function(e){
+            
+            uploadFiles('http://192.168.188.177:8080/dyh/ceshi.do',this.files);
+        },false);
+
+        
+
+        function uploadFiles(url,files) {
+
+
+            var formData= new FormData();
+            for (let index = 0,file; file = files[index]; ++index) {
+                formData.append(file.name,file);// 可加入第三个参数，表示文件名                
+            }
+
+
+            var xhr= new XMLHttpRequest();
+            xhr.open('post',url,true);
+           xhr.upload.onprogress = function (e) {
+               console.log(e);
+           }
+
+            xhr.send(formData);// multipart/form-data
+        }
+
+
+        
+        
+    </script>
+</body>
+</html>

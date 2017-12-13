@@ -5,7 +5,7 @@ XMLHttpRequest实例的属性
     readyState
     onreadystatechange
     response
-    responseTYpe
+    responseType
     responseText
     responseXML
     status
