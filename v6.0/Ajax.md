@@ -17,7 +17,7 @@ XMLHttpRequest实例的属性
 XMLHttpRequest实例的方法
 
     abort()
-    getAllResponseHEaders()
+    getAllResponseHeaders()
     getResponseHeader()
     open()
     send()
@@ -332,7 +332,7 @@ xhr.onerror = function() {
 
 `withCredentials`
 
-withCredentials属性是一个布尔值，表示跨域请求时，用户信息（比如Cookie和认证的HTTP头信息）是否会包含在请求之中，默认为false。即向example.com发出跨域请求时，不会发送example.com设置在本机上的Cookie（如果有的话）。
+withCredentials属性是一个布尔值，表示`跨域请求时(其他请求时，cookie默认是伴随http在浏览器和服务器之间进行传递的)`，用户信息（比如Cookie和认证的HTTP头信息）是否会包含在请求之中，默认为false。即向example.com发出跨域请求时，不会发送example.com设置在本机上的Cookie（如果有的话）。
 
 如果你需要通过跨域AJAX发送Cookie，需要打开withCredentials。
 
@@ -346,7 +346,7 @@ xhr.withCredentials = true;
 Access-Control-Allow-Credentials: true
 ```
 
-.withCredentials属性打开的话，不仅会发送Cookie，还会设置远程主机指定的Cookie。注意，此时你的脚本还是遵守同源政策，无法 从document.cookie或者HTTP回应的头信息之中，读取这些Cookie。
+`.withCredentials属性打开的话，不仅会发送Cookie，还会设置远程主机指定的Cookie。注意，此时你的脚本还是遵守同源政策，无法 从document.cookie或者HTTP回应的头信息之中，读取这些Cookie。`
 
 **XMLHttpRequest实例的方法**
 
@@ -741,21 +741,21 @@ function loadEnd(e) {
 
 HTML网页的<`form`>元素能够以四种格式，向服务器发送数据。
 
-使用POST方法，将enctype属性设为application/x-www-form-urlencoded，这是默认方法。
+`使用POST方法，将enctype属性设为application/x-www-form-urlencoded，这是默认方法。`
 
 ```
 <form action="register.php" method="post" onsubmit="AJAXSubmit(this); return false;">
 </form>
 ```
 
-使用POST方法，将enctype属性设为text/plain。
+`使用POST方法，将enctype属性设为text/plain。`
 
 ```
 <form action="register.php" method="post" enctype="text/plain" onsubmit="AJAXSubmit(this); return false;">
 </form>
 ```
 
-使用POST方法，将enctype属性设为multipart/form-data。
+`使用POST方法，将enctype属性设为multipart/form-data。`
 
 ```
 <form action="register.php" method="post" enctype="multipart/form-data" onsubmit="AJAXSubmit(this); return false;">
@@ -814,7 +814,7 @@ The second line.
 ?foo=bar&baz=The%20first%20line.%0AThe%20second%20line.
 ```
 
-通常，我们使用file控件实现文件上传。
+`通常，我们使用file控件实现文件上传。`
 
 ```
 <form id="file-form" action="handler.php" method="POST">
@@ -899,9 +899,11 @@ xhr.send(file);
 
 `基本用法`
 
-Ajax操作所用的XMLHttpRequest对象，已经有十多年的历史，它的API设计并不是很好，输入、输出、状态都在同一个接口管理，容易写出非常混乱的代码。Fetch API是一种新规范，用来取代XMLHttpRequest对象。
+Ajax操作所用的XMLHttpRequest对象，已经有十多年的历史，它的API设计并不是很好，输入、输出、状态都在同一个接口管理，容易写出非常混乱的代码。`Fetch API是一种新规范，用来取代XMLHttpRequest对象。`
 
 _它主要有两个特点，一是接口合理化，Ajax是将所有不同性质的接口都放在XHR对象上，而Fetch是将它们分散在几个不同的对象上，设计更合理；二是Fetch操作返回Promise对象，避免了嵌套的回调函数。_
+
+亲测：chrome最新版本支持，Ie不支持,但是可以引入一些插件进行兼容。
 
 ```
 if ("fetch" in window){
@@ -950,9 +952,9 @@ response.text().then(function (responseText) {
 }
 ```
 
-上面代码中的text()，其实就是一个数据流读取器，并使用指定格式解读。
+上面代码中的text()，其实就是一个`数据流读取器`，并使用指定格式解读。
 
-Fetch API提供以下五个数据流读取器。
+Fetch API提供以下`五个数据流读取器`。
 
 .text()：返回字符串
 .json()：返回一个JSON对象
@@ -1053,9 +1055,9 @@ fetch('users.json').then(function(response) {
 
 上面代码中，response对象有很多属性，其中的response.type属性比较特别，表示HTTP回应的类型，它有以下三个值。
 
-basic：正常的同域请求
-cors：CORS机制下的跨域请求
-opaque：非CORS机制下的跨域请求，这时无法读取返回的数据，也无法判断是否请求成功
+1. basic：正常的同域请求
+2. cors：CORS机制下的跨域请求
+3. opaque：非CORS机制下的跨域请求，这时无法读取返回的数据，也无法判断是否请求成功
 
 如果需要在CORS机制下发出跨域请求，需要指明状态。
 
@@ -1310,7 +1312,7 @@ json()
 text()
 formData()
 
-注意，上面这些方法都只能使用一次，第二次使用就会报错，也就是说，body属性只能读取一次。Request对象和Response对象都有bodyUsed属性，返回一个布尔值，表示body是否被读取过。
+`注意，上面这些方法都只能使用一次，第二次使用就会报错，也就是说，body属性只能读取一次。Request对象和Response对象都有bodyUsed属性，返回一个布尔值，表示body是否被读取过。`
 
 ```
 var res = new Response("one time use");
